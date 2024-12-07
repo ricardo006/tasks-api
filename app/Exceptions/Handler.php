@@ -2,6 +2,7 @@
 
 namespace App\Exceptions;
 
+use App\Exceptions\TaskNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
 
@@ -37,5 +38,16 @@ class Handler extends ExceptionHandler
         $this->reportable(function (Throwable $e) {
             //
         });
+    }
+
+    public function render($request, Throwable $exception)
+    {
+        if ($exception instanceof TaskNotFoundException) {
+            return response()->json([
+                'message'   => 'Tarefa não encontrada.',
+                'error'     => $exception->getMessage()
+            ], 404);
+        }
+        return parent::render($request, $exception);
     }
 }

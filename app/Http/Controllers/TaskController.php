@@ -91,7 +91,7 @@ class TaskController extends Controller
 
         } catch (\Exception $e) {
             return response()->json([
-                'message' => 'Erro ao criar tarefa. Tente novamente',
+                'message' => 'Erro ao criar tarefa. Tente novamente.',
                 'error' => $e->getMessage()
             ], 500);
         }

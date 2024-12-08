@@ -102,7 +102,7 @@ Para facilitar a utilização das rotas, foi incluída uma collection do Postman
 ### Localização da Collection
 A collection pode ser encontrada em:
 
-`docs/postman/TasksAPI.postman_collection.json`
+`public/collection/Tasks.postman_collection.json`
 
 ### Importando a Collection
 

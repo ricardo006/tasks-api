@@ -1,64 +1,174 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+# Tasks API
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Tasks API é uma aplicação desenvolvida em Laravel para gerenciar tarefas. Este README fornece instruções detalhadas para configurar o ambiente, executar o projeto e realizar os testes automatizados.
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Requisitos
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Certifique-se de que você possui os seguintes requisitos instalados:
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- **PHP** ≥ 8.0
+- **Composer**
+- **MySQL** ou outro banco de dados compatível
+- **Laravel** (opcional, gerenciado via Composer)
 
-## Learning Laravel
+---
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Configuração do Projeto
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### 1. Clone o Repositório
+```bash
+git clone https://github.com/ricardo006/tasks-api.git
+cd tasks-api
+```
 
-## Laravel Sponsors
+### 2. Instale as Dependências
+```bash
+composer install
+```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+### 3. Configure o Arquivo `.env`
+Copie o arquivo de exemplo e ajuste as variáveis conforme o ambiente:
+```bash
+cp .env.example .env
+```
 
-### Premium Partners
+Edite o arquivo `.env` para incluir as credenciais do banco de dados:
+```
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=tasks
+DB_USERNAME=seu_usuario
+DB_PASSWORD=sua_senha
+```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+### 4. Gere a Chave da Aplicação
+```bash
+php artisan key:generate
+```
 
-## Contributing
+### 5. Execute as Migrações e Seeds (se aplicável)
+```bash
+php artisan migrate --seed
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+---
 
-## Code of Conduct
+## Executando o Projeto
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### Servidor de Desenvolvimento
+Inicie o servidor de desenvolvimento com o comando abaixo:
+```bash
+php artisan serve
+```
 
-## Security Vulnerabilities
+Acesse a aplicação em: [http://localhost:8000](http://localhost:8000)
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+---
+## Rotas Disponíveis
 
-## License
+### Autenticação
+- `POST /login` - Realiza o login de um usuário.
+- `POST /register` - Registra um novo usuário.
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### Usuários (Protegidas por autenticação)
+- `GET /users` - Lista todos os usuários.
+- `GET /users/{id}` - Exibe os detalhes de um usuário.
+- `POST /users` - Cria um novo usuário.
+- `PUT /users/{id}` - Atualiza um usuário existente.
+- `DELETE /users/{id}` - Exclui um usuário.
+
+### Tarefas (Protegidas por autenticação)
+- `GET /tasks` - Lista todas as tarefas.
+- `GET /tasks/{id}` - Exibe os detalhes de uma tarefa.
+- `GET /tasks/status` - Obtém tarefas por status.
+- `POST /tasks` - Cria uma nova tarefa.
+- `PUT /tasks/{id}` - Atualiza uma tarefa existente.
+- `PUT /tasks/{taskId}/status/{status}` - Atualiza o status de uma tarefa.
+- `DELETE /tasks/{id}` - Exclui uma tarefa.
+
+### Perfil do Usuário
+- `GET /user` - Retorna os dados do usuário autenticado.
+- `POST /logout` - Realiza o logout do usuário.
+
+---
+
+## Documentação e Collection do Postman
+
+Para facilitar a utilização das rotas, foi incluída uma collection do Postman no projeto.
+
+### Localização da Collection
+A collection pode ser encontrada em:
+
+`docs/postman/TasksAPI.postman_collection.json`
+
+### Importando a Collection
+
+1. Abra o Postman.
+2. Clique em **Import**.
+3. Selecione o arquivo `TasksAPI.postman_collection.json`.
+4. As rotas estarão disponíveis para uso.
+
+### Utilizando o Token de Autenticação
+Para acessar as rotas protegidas:
+1. Realize o login utilizando a rota `POST /login`.
+2. Copie o token gerado na resposta.
+3. No Postman, acesse **Authorization**, escolha o tipo **Bearer Token** e insira o token copiado no campo correspondente.
+
+---
+
+## Executando Testes
+
+### Rodando os Testes
+Os testes são escritos para garantir o funcionamento correto da aplicação.
+
+Execute todos os testes com:
+```bash
+php artisan test
+```
+
+### Estrutura dos Testes
+- **Unit Tests**: Testam funcionalidades específicas de serviços e métodos isolados.
+- **Feature Tests**: Validam rotas e comportamentos da aplicação.
+
+### Cobertura de Testes
+Os testes cobrem as seguintes funcionalidades:
+- Criação de tarefas
+- Atualização de status de tarefas
+- Exibição de detalhes de uma tarefa
+- Testes de comportamento para casos não encontrados ou erros de entrada
+
+---
+
+## Comandos Úteis
+
+### Atualizar o Banco de Dados
+Caso precise resetar o banco de dados:
+```bash
+php artisan migrate:fresh --seed
+```
+
+### Listar Rotas Disponíveis
+```bash
+php artisan route:list
+```
+
+---
+
+## Possíveis Erros
+- **Erro: Route [login] not defined**:
+  - Certifique-se de que a rota de login está configurada ou desabilite a middleware `auth` para testes locais.
+
+- **Erro: The GET method is not supported**:
+  - Verifique o método HTTP na requisição. Use `POST` em rotas de criação de recursos.
+
+- **Banco vazio**:
+  - Rode o comando de seeds: `php artisan db:seed`.
+
+---
+
+## Desenvolvedor
+
+Ricardo Oliveira 

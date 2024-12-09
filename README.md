@@ -11,7 +11,7 @@ Certifique-se de que você possui os seguintes requisitos instalados:
 - **PHP** ≥ 8.0
 - **Composer**
 - **MySQL** ou outro banco de dados compatível
-- **Laravel** (opcional, gerenciado via Composer)
+- **Laravel** (gerenciado via Composer)
 
 ---
 
